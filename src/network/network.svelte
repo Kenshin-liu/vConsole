@@ -70,6 +70,7 @@
         <dl class="vc-table-row">
           <dd class="vc-table-col vc-table-col-4">Name {#if reqCount > 0}({reqCount}){/if}</dd>
           <dd class="vc-table-col">Method</dd>
+          <dd class="vc-table-col">ret</dd>
           <dd class="vc-table-col">Status</dd>
           <dd class="vc-table-col">Time</dd>
         </dl>
@@ -78,9 +79,10 @@
       <div slot="empty" class="vc-plugin-empty">Empty</div>
 
       <div slot="item" let:item={req} class="vc-group" class:vc-actived="{req.actived}" id="{req.id}">
-        <dl class="vc-table-row vc-group-preview" class:vc-table-row-error="{req.status >= 400}" on:click={() => onTapPreview(req.id)}>
+        <dl class="vc-table-row vc-group-preview" class:vc-table-row-error="{req.status >= 400 || req.retCode !== '0'}" on:click={() => onTapPreview(req.id)}>
           <dd class="vc-table-col vc-table-col-4">{req.name}</dd>
           <dd class="vc-table-col">{req.method}</dd>
+          <dd class="vc-table-col">{req.retCode}</dd>
           <dd class="vc-table-col">{req.statusText}</dd>
           <dd class="vc-table-col">{req.costTime}</dd>
         </dl>

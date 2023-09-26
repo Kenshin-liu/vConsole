@@ -167,6 +167,7 @@ export class XHRProxyHandler<T extends XMLHttpRequest> implements ProxyHandler<T
       case 0: // UNSENT
       case 1: // OPENED
         this.item.status = 0;
+        this.item.retCode = 'Pending';
         this.item.statusText = 'Pending';
         if (!this.item.startTime) {
           this.item.startTime = Date.now();
@@ -177,6 +178,7 @@ export class XHRProxyHandler<T extends XMLHttpRequest> implements ProxyHandler<T
 
       case 2: // HEADERS_RECEIVED
         this.item.status = this.XMLReq.status;
+        this.item.retCode = 'Loading';
         this.item.statusText = 'Loading';
         this.item.header = {};
         const header = this.XMLReq.getAllResponseHeaders() || '',
@@ -194,6 +196,7 @@ export class XHRProxyHandler<T extends XMLHttpRequest> implements ProxyHandler<T
 
       case 3: // LOADING
         this.item.status = this.XMLReq.status;
+        this.item.retCode = 'Loading';
         this.item.statusText = 'Loading';
         if (!!this.XMLReq.response && this.XMLReq.response.length) {
           this.item.responseSize = this.XMLReq.response.length;
@@ -204,6 +207,14 @@ export class XHRProxyHandler<T extends XMLHttpRequest> implements ProxyHandler<T
       case 4: // DONE
         // `XMLReq.abort()` will change `status` from 200 to 0, so use previous value in this case
         this.item.status = this.XMLReq.status || this.item.status || 0;
+        let retCode = 'Unknown'
+        try {
+          const resp = JSON.parse(this.XMLReq.response)
+          retCode = resp.retcode || resp.code || 'Unknown';
+        } catch (error) {
+          console.error('xhr.proxy.ts error', error);
+        }
+        this.item.retCode = retCode;
         this.item.statusText = String(this.item.status); // show status code when request completed
         this.item.endTime = Date.now();
         this.item.costTime = this.item.endTime - (this.item.startTime || this.item.endTime);
@@ -217,6 +228,7 @@ export class XHRProxyHandler<T extends XMLHttpRequest> implements ProxyHandler<T
 
       default:
         this.item.status = this.XMLReq.status;
+        this.item.retCode = 'Unknown';
         this.item.statusText = 'Unknown';
         break;
     }

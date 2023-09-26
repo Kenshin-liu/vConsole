@@ -9,6 +9,7 @@ export class VConsoleNetworkRequestItem {
   name?: string              = '';
   method: VConsoleRequestMethod = '';
   url: string                = '';
+  retCode: string            = '';
   status: number | string    = 0; // HTTP status codes
   statusText?: string        = ''; // for display
   cancelState?: 0 | 1 | 2 | 3 = 0; // 0=no cancel; 1=abort (for XHR); 2=cancel (for Fetch); 3=timeout;
