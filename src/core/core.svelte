@@ -45,6 +45,7 @@
   let preivousContentUpdateTime = 0;
   let cssTimer = null;
   let divContent: HTMLElement;
+  let vcMask: HTMLElement | undefined;
   const contentScrollTop: { [pluginId: string]: number } = {};
 
   $: {
@@ -316,6 +317,9 @@
       mockTapInfo.touchHasMoved = false;
       mockTapInfo.targetElem = null;
     },
+    maskTouchMove(e) {
+      e.preventDefault()
+    },
   };
 </script>
 
@@ -334,10 +338,10 @@
     on:click={onTapEventShow}
   />
 
-  <div class="vc-mask" style="display: {showMask ? 'block' : 'none'};" on:click={onTapEventHide}></div>
+  <div bind:this={vcMask} class="vc-mask" style="display: {showMask ? 'block' : 'none'};" on:touchmove|capture|nonpassive={mockTapEvent.maskTouchMove} on:click={onTapEventHide}></div>
 
   <div class="vc-panel" style="display: {showPanel ? 'block' : 'none'};">
-    <div class="vc-tabbar">
+    <div class="vc-tabbar" on:touchmove|capture|nonpassive={mockTapEvent.maskTouchMove}>
       {#each Object.entries(pluginList) as [pluginId, plugin]}
         {#if plugin.hasTabPanel}
           <a
@@ -350,7 +354,7 @@
       {/each}
     </div>
 
-    <div class="vc-topbar">
+    <div class="vc-topbar" on:touchmove|capture|nonpassive={mockTapEvent.maskTouchMove}>
       {#each Object.entries(pluginList) as [pluginId, plugin]}
         {#each plugin.topbarList as item, i}
           <i
