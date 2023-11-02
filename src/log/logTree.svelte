@@ -12,7 +12,7 @@
   export let keyType: '' | 'private' | 'symbol' = '';
   export let toggle: Record<string, boolean> = {}
 
-  const KEY_PAGE_SIZE = 50;
+  const KEY_PAGE_SIZE = 250;
   let isToggle: boolean = false;
   let isTree: boolean = false;
   let isShowProto: boolean = false;
