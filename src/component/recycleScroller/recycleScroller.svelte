@@ -6,7 +6,7 @@
   import Style from './recycleScroller.less';
   import { useResizeObserver, hasResizeObserver } from './resizeObserver';
   import createRecycleManager from './recycleManager';
-
+  
   // props
   export let items: any[];
   export let itemKey: string | undefined = undefined;
@@ -207,6 +207,8 @@
         // hack: When the ResizeObserver is not available, use native scrolling.
         // At this time, the parent container should have an automatic height instead of a fixed height
         viewport.parentElement.style.height = 'auto';
+        viewport.style.minHeight = '500px';
+        viewport.style.overflow = 'scroll';
       }
       initItems(items);
       isInited = true;
