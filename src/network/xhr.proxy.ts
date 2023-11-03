@@ -214,7 +214,7 @@ export class XHRProxyHandler<T extends XMLHttpRequest> implements ProxyHandler<T
           responseJson = JSON.parse(this.XMLReq.response)
           retCode = responseJson.retcode.toString() || 'Unknown';
         } catch (error) {
-          console.warn('xhr.proxy.ts error', error);
+          // console.warn('xhr.proxy.ts error', error);
         }
         this.item.retCode = retCode;
         this.item.statusText = String(this.item.status); // show status code when request completed

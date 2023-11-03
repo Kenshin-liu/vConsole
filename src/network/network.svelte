@@ -5,7 +5,6 @@
   import { requestList } from "./network.model";
   // @ts-ignore
   import LogTree from "../log/LogTree.svelte";
-  import { VConsoleUninvocatableObject } from "../log/logTool";
   import Style from "./network.less";
   import RecycleScroller from "../component/recycleScroller/recycleScroller.svelte";
   import type { VConsoleNetworkRequestItem } from "./requestItem";
@@ -41,10 +40,7 @@
   };
 
   const isTree = (origData: any) => {
-    return (
-      !(origData instanceof VConsoleUninvocatableObject) &&
-      (tool.isArray(origData) || tool.isObject(origData))
-    );
+    return tool.isArray(origData) || tool.isObject(origData)
   };
 
   onMount(() => {
