@@ -25,7 +25,6 @@
   let reqList = [];
   $: {
     reqList = Object.values($requestList);
-    console.log('%c[DEBUG] 🐞 reqList --------> ', 'color: #e5de73;font-size: 16px;', reqList);
   }
 
   const onTapPreview = (reqId: string) => {
@@ -279,7 +278,7 @@
               </div>
             {/if}
             <div class="vc-table-row vc-left-border vc-small">
-              {#if isTree(req.responseJson) && (req.response || '').length < 150}
+              {#if isTree(req.responseJson) && (req.response || '').length > 150}
                 <LogTree origData={req.responseJson} toggle={{'': true}} />
               {:else}
                 <pre

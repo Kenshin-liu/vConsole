@@ -77,7 +77,7 @@ export class XHRProxyHandler<T extends XMLHttpRequest> implements ProxyHandler<T
 
     // update response by responseType
     this.item.response = Helper.genResonseByResponseType(this.item.responseType, this.item.response);
-    this.item.responseJson = Helper.genResonseByResponseType(this.item.responseType, this.item.response);
+    this.item.responseJson = Helper.genResonseJsonByResponseType(this.item.responseType, this.item.response);
 
     this.triggerUpdate();
   }
@@ -212,7 +212,7 @@ export class XHRProxyHandler<T extends XMLHttpRequest> implements ProxyHandler<T
         let responseJson:any = {}
         try {
           responseJson = JSON.parse(this.XMLReq.response)
-          retCode = responseJson.retcode || responseJson.code || 'Unknown';
+          retCode = responseJson.retcode.toString() || 'Unknown';
         } catch (error) {
           console.warn('xhr.proxy.ts error', error);
         }
