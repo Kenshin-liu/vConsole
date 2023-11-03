@@ -77,6 +77,7 @@ export class XHRProxyHandler<T extends XMLHttpRequest> implements ProxyHandler<T
 
     // update response by responseType
     this.item.response = Helper.genResonseByResponseType(this.item.responseType, this.item.response);
+    this.item.responseJson = Helper.genResonseByResponseType(this.item.responseType, this.item.response);
 
     this.triggerUpdate();
   }
@@ -208,9 +209,10 @@ export class XHRProxyHandler<T extends XMLHttpRequest> implements ProxyHandler<T
         // `XMLReq.abort()` will change `status` from 200 to 0, so use previous value in this case
         this.item.status = this.XMLReq.status || this.item.status || 0;
         let retCode = 'Unknown'
+        let responseJson:any = {}
         try {
-          const resp = JSON.parse(this.XMLReq.response)
-          retCode = resp.retcode || resp.code || 'Unknown';
+          responseJson = JSON.parse(this.XMLReq.response)
+          retCode = responseJson.retcode || responseJson.code || 'Unknown';
         } catch (error) {
           console.warn('xhr.proxy.ts error', error);
         }
@@ -218,6 +220,7 @@ export class XHRProxyHandler<T extends XMLHttpRequest> implements ProxyHandler<T
         this.item.statusText = String(this.item.status); // show status code when request completed
         this.item.endTime = Date.now();
         this.item.costTime = this.item.endTime - (this.item.startTime || this.item.endTime);
+        this.item.responseJson = responseJson;
         this.item.response = this.XMLReq.response;
 
         if (!!this.XMLReq.response && this.XMLReq.response.length) {

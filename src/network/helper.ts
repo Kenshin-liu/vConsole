@@ -67,6 +67,40 @@ export const genResonseByResponseType = (responseType: string, response: any) =>
   return ret;
 };
 
+export const genResonseJsonByResponseType = (responseType: string, response: any) => {
+  let ret = '';
+  switch (responseType) {
+    case '':
+    case 'text':
+    case 'json':
+      // try to parse JSON
+      if (tool.isString(response)) {
+        try {
+          ret = JSON.parse(response);
+        } catch (e) {
+          // not a JSON string
+          ret = tool.getStringWithinLength(String(response), 10000);
+        }
+      } else if (tool.isObject(response) || tool.isArray(response)) {
+        ret = response
+      } else if (typeof response !== 'undefined') {
+        ret = Object.prototype.toString.call(response);
+      }
+      break;
+
+    case 'blob':
+    case 'document':
+    case 'arraybuffer':
+    case 'formdata':
+    default:
+      if (typeof response !== 'undefined') {
+        ret = Object.prototype.toString.call(response);
+      }
+      break;
+  }
+  return ret;
+};
+
 /**
  * Generate formatted response body by XMLHttpRequestBodyInit.
  */

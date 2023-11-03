@@ -19,6 +19,7 @@ export class VConsoleNetworkRequestItem {
   requestType: 'xhr' | 'fetch' | 'ping' | 'custom';
   requestHeader: HeadersInit = null;
   response: any;
+  responseJson: any;
   responseSize: number      = 0; // bytes
   responseSizeText: string  = '';
   startTime: number         = 0;
