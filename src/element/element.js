@@ -345,7 +345,7 @@ class VConsoleElementsTab extends VConsolePlugin {
   _isInVConsole(elem) {
     let target = elem;
     while (target != undefined) {
-      if (target.id == '__vconsole') {
+      if (target.id == '__vconsole__v3') {
         return true;
       }
       target = target.parentNode || undefined;

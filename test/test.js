@@ -69,7 +69,7 @@ describe("vConsole", function() {
     jsdom.env('test/log.html', function(err, window) {
       var document = window.document;
 
-      assert.equal(document.querySelector('#__vconsole') !== null, true);
+      assert.equal(document.querySelector('#__vconsole__v3') !== null, true);
 
       document.querySelector('.weui_btn.weui_btn_default:nth-of-type(1)').click(); // formattedLog
       assert.equal(document.querySelector('.vc-logbox.vc-actived .vc-log .vc-item .vc-item-content').innerHTML, ' formattedLog() Start');
@@ -94,7 +94,7 @@ describe("vConsole", function() {
   it('plugin.html', function(done) {
     jsdom.env('test/plugin.html', function(err, window) {
       var document = window.document;
-      assert.equal(document.querySelector('#__vconsole') !== null, true);
+      assert.equal(document.querySelector('#__vconsole__v3') !== null, true);
 
       document.querySelector('.page a:nth-of-type(1)').click(); // newTab
       assert.equal(document.querySelector('.vc-tabbar .vc-tab:nth-of-type(4)').innerHTML, 'Tab1');
@@ -112,7 +112,7 @@ describe("vConsole", function() {
 
     jsdom.env('test/ajax.html', function(err, window) {
       var document = window.document;
-      assert.equal(document.querySelector('#__vconsole') !== null, true);
+      assert.equal(document.querySelector('#__vconsole__v3') !== null, true);
 
       document.querySelector('.page a:nth-of-type(1)').click(); // asyncAjax
       setTimeout(function () {
